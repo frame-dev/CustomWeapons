@@ -11,6 +11,14 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
+	
+	<distributionManagement>
+		<repository>
+			<id>repository</id>
+			<url>https://framedev.ch:444/betas</url>
+		</repository>
+	</distributionManagement>
+	
 	<build>
 		<defaultGoal>clean package</defaultGoal>
 		<plugins>

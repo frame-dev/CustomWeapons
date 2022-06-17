@@ -15,7 +15,7 @@ public class CustomArrow implements Listener {
 	public CustomArrow(String name, boolean critical) {
 		this.name = name;
 		this.critical = critical;
-		Main.getPlugin(Main.class).getServer().getPluginManager().registerEvents(this, Main.getPlugin(Main.class));
+		Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	
 	public Entity shoot(Player player, double damage, double speed) {

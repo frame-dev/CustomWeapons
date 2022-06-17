@@ -1,1 +1,4 @@
 Xray: false
+
+packages:
+  - ch.framedev.customweapons

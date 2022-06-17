@@ -1,9 +1,14 @@
 package ch.framedev.customweapons.weapons;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,6 +22,7 @@ import com.google.gson.Gson;
 
 import ch.framedev.customweapons.arrows.CustomArrow;
 import ch.framedev.customweapons.main.Main;
+import de.framedev.javautils.ReflectionUtils;
 
 /**
  * 
@@ -34,7 +40,7 @@ public abstract class AbstractWeapon<T extends CustomArrow> implements Listener 
 	public boolean infinity;
 
 	public AbstractWeapon() {
-		Bukkit.getPluginManager().registerEvents(this, Main.getPlugin(Main.class));
+		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 
 	@EventHandler
@@ -53,7 +59,7 @@ public abstract class AbstractWeapon<T extends CustomArrow> implements Listener 
 			if(infinity)
 				meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
 			weaponType.setItemMeta(meta);
-			Main.getPlugin(Main.class).getWeaponRegister().registerWeapon(this);
+			Main.getInstance().getWeaponRegister().registerWeapon(this);
 			return weaponType;
 		} else if (weaponType.getType() == Material.CROSSBOW) {
 			CrossbowMeta meta = (CrossbowMeta) weaponType.getItemMeta();
@@ -62,12 +68,55 @@ public abstract class AbstractWeapon<T extends CustomArrow> implements Listener 
 			if(infinity)
 				meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
 			weaponType.setItemMeta(meta);
-			Main.getPlugin(Main.class).getWeaponRegister().registerWeapon(this);
+			Main.getInstance().getWeaponRegister().registerWeapon(this);
 			return weaponType;
 		}
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T extends AbstractWeapon<?>> T load(File file) throws ClassNotFoundException {
+		ReflectionUtils reflectionUtils = new ReflectionUtils();
+		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+		Class<AbstractWeapon<?>> clazz = (Class<AbstractWeapon<?>>) getClassFromPackageList(cfg.getString("type"));
+		List<Object> params = new ArrayList<>();
+		params.add(cfg.getString("name"));
+		params.add(new ItemStack(Material.getMaterial(cfg.getString("weapontype"))));
+		List<Object> paramsV2 = new ArrayList<>();
+		paramsV2.add(cfg.getString("munition.name"));
+		paramsV2.add(cfg.getBoolean("munition.critical"));
+		Object mun = reflectionUtils.newInstance(reflectionUtils.getClassName(getClassArrowFromPackageList(cfg.getString("munition.type"))), paramsV2, String.class, boolean.class);
+		params.add(mun);
+		params.add(cfg.getDouble("damage"));
+		params.add(cfg.getDouble("speed"));
+		Object o = reflectionUtils.newInstance(reflectionUtils.getClassName(clazz),params,String.class,ItemStack.class,mun.getClass(),double.class, double.class);
+		return (T) o;
+	}
+	
+	private static Class<?> getClassFromPackageList(String bowType) {
+		for(String s : Main.getInstance().getConfig().getStringList("packages")) {
+			try {
+				Class<?> claZ = Class.forName(s + ".weapons." + bowType);
+				return claZ;
+			} catch (Exception e) {
+				continue;
+			}
+		}
+		return null;
+	}
+	
+	private static Class<?> getClassArrowFromPackageList(String arrowType) {
+		for(String s : Main.getInstance().getConfig().getStringList("packages")) {
+			try {
+				Class<?> claZ = Class.forName(s + ".arrows." + arrowType);
+				return claZ;
+			} catch (Exception e) {
+				continue;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);
