@@ -1,0 +1,10 @@
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/classes/CustomArrow.java
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/classes/AbstractWeapon.java
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/classes/WeaponRegister.java
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/main/Main.java
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/commands/WeaponCMD.java
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/classes/FireBow.java
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/arrows/TildeArrow.java
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/managers/RegisterManager.java
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/commands/XrayCMD.java
+/home/darryl/eclipse-workspace/CustomWeapons/src/main/java/ch/framedev/customweapons/classes/CrossFireWeapon.java

@@ -1,0 +1,10 @@
+ch/framedev/customweapons/main/Main.class
+ch/framedev/customweapons/commands/WeaponCMD.class
+ch/framedev/customweapons/arrows/TildeArrow.class
+ch/framedev/customweapons/managers/RegisterManager.class
+ch/framedev/customweapons/classes/AbstractWeapon.class
+ch/framedev/customweapons/classes/WeaponRegister.class
+ch/framedev/customweapons/commands/XrayCMD.class
+ch/framedev/customweapons/classes/FireBow.class
+ch/framedev/customweapons/classes/CustomArrow.class
+ch/framedev/customweapons/classes/CrossFireWeapon.class
