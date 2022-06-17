@@ -15,7 +15,7 @@ public class Main extends JavaPlugin {
 	
 	private WeaponRegister weaponRegister;
 	
-	
+	//
 	@Override
 	public void onEnable() {
 		this.weaponRegister = new WeaponRegister();
