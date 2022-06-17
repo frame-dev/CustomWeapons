@@ -6,8 +6,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import ch.framedev.customweapons.arrows.CustomArrow;
 import ch.framedev.customweapons.arrows.TildeArrow;
-import ch.framedev.customweapons.classes.WeaponRegister;
 import ch.framedev.customweapons.managers.RegisterManager;
+import ch.framedev.customweapons.managers.WeaponRegister;
 import ch.framedev.customweapons.weapons.CrossFireWeapon;
 import ch.framedev.customweapons.weapons.FireBow;
 
@@ -25,7 +25,7 @@ public class Main extends JavaPlugin {
 		saveDefaultConfig();
 		
 		new CrossFireWeapon("CrossFire", new ItemStack(Material.BOW), new CustomArrow("Arrow12", true), 2.5, 2).create();
-		new FireBow("FireBow", new ItemStack(Material.BOW), new TildeArrow("TildeArr", true), 1.25, 2).create();
+		new FireBow("FireBow", new ItemStack(Material.BOW), new TildeArrow("TildeArr", true), 3.25, 0).create();
 	}
 	
 	@Override

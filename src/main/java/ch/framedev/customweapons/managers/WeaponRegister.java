@@ -1,4 +1,4 @@
-package ch.framedev.customweapons.classes;
+package ch.framedev.customweapons.managers;
 
 import java.util.HashMap;
 

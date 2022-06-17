@@ -22,6 +22,7 @@ public class CustomArrow implements Listener {
 		Arrow arrow = player.launchProjectile(Arrow.class);
 		arrow.setDamage(damage);
 		arrow.setCustomName(name);
+		arrow.setCustomNameVisible(true);
 		arrow.setCritical(critical);
 		arrow.setVelocity(arrow.getVelocity().multiply(speed));
 		return arrow;
