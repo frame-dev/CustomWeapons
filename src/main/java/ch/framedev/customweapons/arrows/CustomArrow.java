@@ -1,4 +1,4 @@
-package ch.framedev.customweapons.classes;
+package ch.framedev.customweapons.arrows;
 
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;

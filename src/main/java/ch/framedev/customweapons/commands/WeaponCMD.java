@@ -5,8 +5,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import ch.framedev.customweapons.classes.AbstractWeapon;
 import ch.framedev.customweapons.main.Main;
+import ch.framedev.customweapons.weapons.AbstractWeapon;
 import de.framedev.javautils.SpigotAPI.InventoryManager;
 
 public class WeaponCMD implements CommandExecutor {

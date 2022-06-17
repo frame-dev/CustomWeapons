@@ -1,6 +1,8 @@
-package ch.framedev.customweapons.classes;
+package ch.framedev.customweapons.weapons;
 
 import org.bukkit.inventory.ItemStack;
+
+import ch.framedev.customweapons.arrows.CustomArrow;
 
 public class CrossFireWeapon extends AbstractWeapon<CustomArrow> {
 	

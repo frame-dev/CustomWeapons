@@ -2,6 +2,8 @@ package ch.framedev.customweapons.classes;
 
 import java.util.HashMap;
 
+import ch.framedev.customweapons.arrows.CustomArrow;
+import ch.framedev.customweapons.weapons.AbstractWeapon;
 import de.framedev.javautils.FrameList;
 
 public class WeaponRegister {

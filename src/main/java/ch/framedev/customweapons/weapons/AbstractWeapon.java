@@ -1,4 +1,4 @@
-package ch.framedev.customweapons.classes;
+package ch.framedev.customweapons.weapons;
 
 import java.util.Arrays;
 
@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.gson.Gson;
 
+import ch.framedev.customweapons.arrows.CustomArrow;
 import ch.framedev.customweapons.main.Main;
 
 /**

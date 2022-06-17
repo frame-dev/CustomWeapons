@@ -4,12 +4,12 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import ch.framedev.customweapons.arrows.CustomArrow;
 import ch.framedev.customweapons.arrows.TildeArrow;
-import ch.framedev.customweapons.classes.CrossFireWeapon;
-import ch.framedev.customweapons.classes.CustomArrow;
-import ch.framedev.customweapons.classes.FireBow;
 import ch.framedev.customweapons.classes.WeaponRegister;
 import ch.framedev.customweapons.managers.RegisterManager;
+import ch.framedev.customweapons.weapons.CrossFireWeapon;
+import ch.framedev.customweapons.weapons.FireBow;
 
 public class Main extends JavaPlugin {
 	

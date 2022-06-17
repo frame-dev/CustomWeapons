@@ -4,8 +4,6 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import ch.framedev.customweapons.classes.CustomArrow;
-
 public class TildeArrow extends CustomArrow {
 
 	public TildeArrow(String name, boolean critical) {
