@@ -28,19 +28,21 @@ import de.framedev.javautils.ReflectionUtils;
  * 
  * @author FrameDev
  *
- * @param <T> T extends CustomArrow
  */
-public abstract class AbstractWeapon<T extends CustomArrow> implements Listener {
+public abstract class AbstractWeapon implements Listener {
 
 	public String name;
 	public double damage;
-	public T munition;
+	public CustomArrow munition;
 	public ItemStack weaponType;
 	public double speed;
 	public boolean infinity;
+	public String bowType;
 
-	public AbstractWeapon() {
+	public AbstractWeapon(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed) {
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
+		this.bowType = this.getClass().getSimpleName();
+		create();
 	}
 
 	@EventHandler
@@ -55,7 +57,7 @@ public abstract class AbstractWeapon<T extends CustomArrow> implements Listener 
 		if (weaponType.getType() == Material.BOW) {
 			ItemMeta meta = weaponType.getItemMeta();
 			meta.setDisplayName(name);
-			meta.setLore(Arrays.asList("§aDamage : §6" + damage,"§aMunition : §6" + munition, "§aSpeed : §6" + speed));
+			meta.setLore(Arrays.asList("Bow Type : " + bowType,"§aDamage : §6" + damage,"Arrow Type : " + munition.getClass().getSimpleName(), "§aMunition : §6" + munition, "§aSpeed : §6" + speed));
 			if(infinity)
 				meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
 			weaponType.setItemMeta(meta);
@@ -64,7 +66,7 @@ public abstract class AbstractWeapon<T extends CustomArrow> implements Listener 
 		} else if (weaponType.getType() == Material.CROSSBOW) {
 			CrossbowMeta meta = (CrossbowMeta) weaponType.getItemMeta();
 			meta.setDisplayName(name);
-			meta.setLore(Arrays.asList("§aDamage : §6" + damage,"§aMunition : §6" + munition, "§aSpeed : §6" + speed));
+			meta.setLore(Arrays.asList("Bow Type : " + bowType,"§aDamage : §6" + damage,"Arrow Type : " + munition.getClass().getSimpleName(), "§aMunition : §6" + munition, "§aSpeed : §6" + speed));
 			if(infinity)
 				meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
 			weaponType.setItemMeta(meta);
@@ -75,21 +77,21 @@ public abstract class AbstractWeapon<T extends CustomArrow> implements Listener 
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T extends AbstractWeapon<?>> T load(File file) throws ClassNotFoundException {
+	public static <T extends AbstractWeapon> T load(File file) throws ClassNotFoundException {
 		ReflectionUtils reflectionUtils = new ReflectionUtils();
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-		Class<AbstractWeapon<?>> clazz = (Class<AbstractWeapon<?>>) getClassFromPackageList(cfg.getString("type"));
+		Class<AbstractWeapon> clazz = (Class<AbstractWeapon>) getClassFromPackageList(cfg.getString("type"));
 		List<Object> params = new ArrayList<>();
 		params.add(cfg.getString("name"));
 		params.add(new ItemStack(Material.getMaterial(cfg.getString("weapontype"))));
 		List<Object> paramsV2 = new ArrayList<>();
 		paramsV2.add(cfg.getString("munition.name"));
 		paramsV2.add(cfg.getBoolean("munition.critical"));
-		Object mun = reflectionUtils.newInstance(reflectionUtils.getClassName(getClassArrowFromPackageList(cfg.getString("munition.type"))), paramsV2, String.class, boolean.class);
+		Object mun = reflectionUtils.newInstance(reflectionUtils.getClassName(getClassArrowFromPackageList(cfg.getString("munition.type"))), paramsV2,true, String.class, boolean.class);
 		params.add(mun);
 		params.add(cfg.getDouble("damage"));
 		params.add(cfg.getDouble("speed"));
-		Object o = reflectionUtils.newInstance(reflectionUtils.getClassName(clazz),params,String.class,ItemStack.class,mun.getClass(),double.class, double.class);
+		Object o = reflectionUtils.newInstance(reflectionUtils.getClassName(clazz),params,true,String.class,ItemStack.class,CustomArrow.class,double.class, double.class);
 		return (T) o;
 	}
 	

@@ -18,21 +18,21 @@ import ch.framedev.customweapons.weapons.CrossFireWeapon;
 import ch.framedev.customweapons.weapons.FireBow;
 
 public class Main extends JavaPlugin {
-	
+
 	private WeaponRegister weaponRegister;
 	private static Main instance;
-	
+
 	//
 	@Override
 	public void onEnable() {
 		instance = this;
 		this.weaponRegister = new WeaponRegister();
 		new RegisterManager(this);
-		
+
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
-		
-		if(!new File(getDataFolder(), "bows").exists()) {
+
+		if (!new File(getDataFolder(), "bows").exists()) {
 			new File(getDataFolder(), "bows").mkdir();
 			File file = new File(getDataFolder() + "/bows", "testbow.yml");
 			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
@@ -51,33 +51,33 @@ public class Main extends JavaPlugin {
 				e.printStackTrace();
 			}
 		}
-		for(File file : getFiles()) {
-			getWeaponFromFile(file).create();
+		for (File file : getFiles()) {
+			getWeaponFromFile(file);
 		}
-		
-		new CrossFireWeapon("CrossFire", new ItemStack(Material.BOW), new CustomArrow("Arrow12", true), 2.5, 2).create();
-		new FireBow("FireBow", new ItemStack(Material.BOW), new TildeArrow("TildeArr", true), 3.25, 0).create();
+
+		new CrossFireWeapon("CrossFire", new ItemStack(Material.BOW), new CustomArrow("Arrow12", true), 2.5, 2);
+		new FireBow("FireBow", new ItemStack(Material.BOW), new TildeArrow("TildeArr", true), 3.25, 0);
 	}
-	
+
 	@Override
 	public void onLoad() {
-		
+
 	}
-	
+
 	@Override
 	public void onDisable() {
 
 	}
-	
+
 	public static Main getInstance() {
 		return instance;
 	}
-	
+
 	public WeaponRegister getWeaponRegister() {
 		return weaponRegister;
 	}
-	
-	public AbstractWeapon<?> getWeaponFromFile(File file) {
+
+	public AbstractWeapon getWeaponFromFile(File file) {
 		try {
 			return AbstractWeapon.load(file);
 		} catch (ClassNotFoundException e) {
@@ -85,10 +85,10 @@ public class Main extends JavaPlugin {
 		}
 		return null;
 	}
-	
+
 	public File[] getFiles() {
 		File file = new File(getDataFolder(), "bows");
-		if(file.exists()) {
+		if (file.exists()) {
 			return file.listFiles();
 		}
 		return null;

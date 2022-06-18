@@ -10,6 +10,11 @@ public class TildeArrow extends CustomArrow {
 		super(name, critical);
 	}
 	
+	public Class<CustomArrow> getClazz() {
+		return CustomArrow.class;
+	}
+
+	
 	@Override
 	public Entity shoot(Player player, double damage, double speed) {
 		Arrow arrow = player.launchProjectile(Arrow.class);

@@ -27,7 +27,7 @@ public class WeaponCMD implements CommandExecutor {
 			if (command.getName().equalsIgnoreCase("weapon")) {
 				if (args[0].equalsIgnoreCase("inventory")) {
 					this.weaponInventoryBuilder.getInventory().clear();
-					for(AbstractWeapon<?> abstractWeapon : plugin.getWeaponRegister().getWeapons()) {
+					for(AbstractWeapon abstractWeapon : plugin.getWeaponRegister().getWeapons()) {
 						this.weaponInventoryBuilder.addItem(abstractWeapon.weaponType);
 					}
 					weaponInventoryBuilder.show((Player) sender);

@@ -2,12 +2,12 @@ package ch.framedev.customweapons.weapons;
 
 import org.bukkit.inventory.ItemStack;
 
-import ch.framedev.customweapons.arrows.TildeArrow;
+import ch.framedev.customweapons.arrows.CustomArrow;
 
-public class FireBow extends AbstractWeapon<TildeArrow> {
+public class FireBow extends AbstractWeapon {
 	
-	public FireBow(String name, ItemStack weaponType, TildeArrow munition, double damage, double speed) {
-		super();
+	public FireBow(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed) {
+		super(name, weaponType, munition, damage, speed);
 		super.name = name;
 		super.weaponType = weaponType;
 		super.munition = munition;

@@ -17,6 +17,7 @@ public class CustomArrow implements Listener {
 		this.critical = critical;
 		Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
 	}
+
 	
 	public Entity shoot(Player player, double damage, double speed) {
 		Arrow arrow = player.launchProjectile(Arrow.class);
@@ -31,5 +32,10 @@ public class CustomArrow implements Listener {
 	@Override
 	public String toString() {
 		return name + " : " + critical;
+	}
+
+
+	public Class<CustomArrow> getClazz() {
+		return CustomArrow.class;
 	}
 }
