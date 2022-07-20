@@ -40,6 +40,13 @@ public abstract class AbstractWeapon implements Listener {
 	public String bowType;
 
 	public AbstractWeapon(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed) {
+		this.name = name;
+		this.weaponType = weaponType;
+		this.munition = munition;
+		this.damage = damage;
+		this.speed = speed;
+		this.infinity = false;
+		this.bowType = this.getClass().getSimpleName();
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 		this.bowType = this.getClass().getSimpleName();
 		create();

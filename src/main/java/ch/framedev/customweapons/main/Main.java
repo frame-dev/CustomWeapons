@@ -57,6 +57,8 @@ public class Main extends JavaPlugin {
 
 		new CrossFireWeapon("CrossFire", new ItemStack(Material.BOW), new CustomArrow("Arrow12", true), 2.5, 2);
 		new FireBow("FireBow", new ItemStack(Material.BOW), new TildeArrow("TildeArr", true), 3.25, 0);
+
+		new CustomWeaponsAPI(this);
 	}
 
 	@Override
