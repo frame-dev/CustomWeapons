@@ -2,6 +2,8 @@ ch/framedev/customweapons/weapons/FireBow.class
 ch/framedev/customweapons/managers/RegisterManager.class
 ch/framedev/customweapons/arrows/PotionArrow$1.class
 ch/framedev/customweapons/commands/XrayCMD.class
+ch/framedev/customweapons/arrows/TNTArrow.class
+ch/framedev/customweapons/arrows/TNTArrow$1.class
 ch/framedev/customweapons/managers/WeaponRegister.class
 ch/framedev/customweapons/weapons/AbstractWeapon.class
 ch/framedev/customweapons/main/Main.class
@@ -11,3 +13,5 @@ ch/framedev/customweapons/main/CustomWeaponsAPI.class
 ch/framedev/customweapons/weapons/CrossFireWeapon.class
 ch/framedev/customweapons/arrows/PotionArrow.class
 ch/framedev/customweapons/arrows/CustomArrow.class
+ch/framedev/customweapons/weapons/TNTBow.class
+ch/framedev/customweapons/arrows/TNTArrow$1$1.class

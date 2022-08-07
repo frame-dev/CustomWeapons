@@ -6,8 +6,8 @@ import ch.framedev.customweapons.arrows.CustomArrow;
 
 public class CrossFireWeapon extends AbstractWeapon {
 	
-	public CrossFireWeapon(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed) {
-		super(name, weaponType, munition, speed, speed);
+	public CrossFireWeapon(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed, boolean infinity) {
+		super(name, weaponType, munition, speed, speed, infinity);
 		super.name = name;
 		super.weaponType = weaponType;
 		super.munition = munition;

@@ -6,8 +6,8 @@ import ch.framedev.customweapons.arrows.CustomArrow;
 
 public class FireBow extends AbstractWeapon {
 	
-	public FireBow(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed) {
-		super(name, weaponType, munition, damage, speed);
+	public FireBow(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed, boolean infinity) {
+		super(name, weaponType, munition, damage, speed, infinity);
 		super.name = name;
 		super.weaponType = weaponType;
 		super.munition = munition;
