@@ -1,5 +1,6 @@
 package ch.framedev.customweapons.weapons;
 
+import ch.framedev.customweapons.arrows.ArrowType;
 import ch.framedev.customweapons.arrows.CustomArrow;
 import ch.framedev.customweapons.arrows.TNTArrow;
 import ch.framedev.customweapons.main.Main;
@@ -7,6 +8,8 @@ import com.google.gson.Gson;
 import de.framedev.javautils.ReflectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -18,32 +21,31 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * @author FrameDev
  */
-public abstract class AbstractWeapon implements Listener {
+public abstract class AbstractWeapon implements Listener, Serializable {
 
     public String name;
     public double damage;
     public CustomArrow munition;
-    public ItemStack weaponType;
+    public ItemStack weapontype;
     public double speed;
     public boolean infinity;
     public String bowType;
     public static HashMap<Player, ItemStack> arrowShoot = new HashMap<>();
 
-    public AbstractWeapon(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed, boolean infinity) {
+    public AbstractWeapon(String name, ItemStack weapontype, CustomArrow munition, double damage, double speed, boolean infinity) {
         this.name = name;
-        this.weaponType = weaponType;
+        this.weapontype = weapontype;
         this.munition = munition;
         this.damage = damage;
         this.speed = speed;
@@ -52,13 +54,15 @@ public abstract class AbstractWeapon implements Listener {
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         this.bowType = this.getClass().getSimpleName();
         create();
+        if (!Main.getInstance().getWeaponRegister().getWeapons().contains(this))
+            Main.getInstance().getWeaponRegister().registerWeapon(this);
     }
 
     @EventHandler
     public void onPlayerShoot(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player) {
             if (event.getBow().hasItemMeta() && event.getBow().getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
-                arrowShoot.put((Player) event.getEntity(), this.weaponType);
+                arrowShoot.put((Player) event.getEntity(), this.weapontype);
                 event.setProjectile(munition.shoot((Player) event.getEntity(), damage, speed));
                 Arrow arrow = (Arrow) event.getProjectile();
                 if (infinity)
@@ -68,8 +72,8 @@ public abstract class AbstractWeapon implements Listener {
     }
 
     public ItemStack create() {
-        if (weaponType.getType() == Material.BOW) {
-            ItemMeta meta = weaponType.getItemMeta();
+        if (weapontype.getType() == Material.BOW) {
+            ItemMeta meta = weapontype.getItemMeta();
             meta.setDisplayName(name);
             List<String> lore = new ArrayList<>();
             lore.addAll(Arrays.asList("Bow Type : " + bowType, "§aDamage : §6" + damage, "Arrow Type : " + munition.getClass().getSimpleName(), "§aMunition : §6" + munition, "§aSpeed : §6" + speed, "§aInfinity : §6" + infinity));
@@ -78,22 +82,25 @@ public abstract class AbstractWeapon implements Listener {
             if (munition instanceof TNTArrow) {
                 lore.add("Delay : " + ((TNTArrow) munition).delay);
             }
+            if(munition.getArrowType() != null)
+                lore.add("§aArrowType : §6" + munition.getArrowType());
             meta.setLore(lore);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            weaponType.setItemMeta(meta);
+            weapontype.setItemMeta(meta);
             Main.getInstance().getWeaponRegister().registerWeapon(this);
-            return weaponType;
-        } else if (weaponType.getType() == Material.CROSSBOW) {
-            CrossbowMeta meta = (CrossbowMeta) weaponType.getItemMeta();
+            return weapontype;
+        } else if (weapontype.getType() == Material.CROSSBOW) {
+            CrossbowMeta meta = (CrossbowMeta) weapontype.getItemMeta();
             meta.setDisplayName(name);
             meta.setLore(Arrays.asList("Bow Type : " + bowType, "§aDamage : §6" + damage, "Arrow Type : " + munition.getClass().getSimpleName(), "§aMunition : §6" + munition, "§aSpeed : §6" + speed));
             if (infinity)
                 meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            weaponType.setItemMeta(meta);
+            weapontype.setItemMeta(meta);
             Main.getInstance().getWeaponRegister().registerWeapon(this);
-            return weaponType;
+            return weapontype;
         }
+        System.out.println("null");
         return null;
     }
 
@@ -109,7 +116,16 @@ public abstract class AbstractWeapon implements Listener {
         paramsV2.add(cfg.getString("munition.name"));
         paramsV2.add(cfg.getBoolean("munition.critical"));
         Object mun;
-        if (cfg.contains("munition.delay")) {
+        if (cfg.contains("munition.arrowType")) {
+            if (cfg.contains("munition.delay")) {
+                paramsV2.add(cfg.getDouble("munition.delay"));
+                paramsV2.add(ArrowType.valueOf(cfg.getString("munition.arrowType")));
+                mun = reflectionUtils.newInstance(reflectionUtils.getClassName(getClassArrowFromPackageList(cfg.getString("munition.type"))), paramsV2, true, String.class, boolean.class, double.class);
+            } else {
+                paramsV2.add(ArrowType.valueOf(cfg.getString("munition.arrowType")));
+                mun = reflectionUtils.newInstance(reflectionUtils.getClassName(getClassArrowFromPackageList(cfg.getString("munition.type"))), paramsV2, true, String.class, boolean.class, ArrowType.class);
+            }
+        } else if (cfg.contains("munition.delay")) {
             paramsV2.add(cfg.getDouble("munition.delay"));
             mun = reflectionUtils.newInstance(reflectionUtils.getClassName(getClassArrowFromPackageList(cfg.getString("munition.type"))), paramsV2, true, String.class, boolean.class, double.class);
         } else
@@ -145,6 +161,17 @@ public abstract class AbstractWeapon implements Listener {
             }
         }
         return null;
+    }
+
+    public static void createRecipe(AbstractWeapon abstractWeapon, Material ingredient) {
+        Server server = Main.getInstance().getServer();
+        if(server.getRecipe(NamespacedKey.fromString(abstractWeapon.name.toLowerCase().replace(" ","_").replace("-","_"), Main.getInstance())) == null) {
+            ShapelessRecipe shapedRecipe = new ShapelessRecipe(Objects.requireNonNull(NamespacedKey.fromString(abstractWeapon.name.toLowerCase().replace(" ","_").replace("-","_"), Main.getInstance())), abstractWeapon.weapontype);
+            shapedRecipe.addIngredient(1, Material.BOW);
+            shapedRecipe.addIngredient(1, ingredient);
+            shapedRecipe.setGroup("customweapons");
+            server.addRecipe(shapedRecipe);
+        }
     }
 
     @Override

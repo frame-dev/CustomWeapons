@@ -6,3 +6,4 @@ commands:
   xray:
   resetxray:
   weapon:
+  getversion:

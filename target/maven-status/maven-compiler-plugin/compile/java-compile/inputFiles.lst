@@ -1,3 +1,4 @@
+/Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/main/Version.java
 /Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/weapons/TNTBow.java
 /Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/arrows/PotionArrow.java
 /Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/commands/WeaponCMD.java
@@ -9,6 +10,8 @@
 /Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/main/Main.java
 /Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/main/CustomWeaponsAPI.java
 /Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/arrows/TildeArrow.java
+/Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/weapons/PotionBow.java
+/Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/arrows/ArrowType.java
 /Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/managers/RegisterManager.java
 /Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/weapons/AbstractWeapon.java
 /Users/framedev/Documents/GitHub/CustomWeapons/src/main/java/ch/framedev/customweapons/weapons/FireBow.java

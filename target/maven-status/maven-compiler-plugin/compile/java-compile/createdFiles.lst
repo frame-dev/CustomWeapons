@@ -5,12 +5,15 @@ ch/framedev/customweapons/commands/XrayCMD.class
 ch/framedev/customweapons/arrows/TNTArrow.class
 ch/framedev/customweapons/arrows/TNTArrow$1.class
 ch/framedev/customweapons/managers/WeaponRegister.class
+ch/framedev/customweapons/main/Version.class
 ch/framedev/customweapons/weapons/AbstractWeapon.class
 ch/framedev/customweapons/main/Main.class
 ch/framedev/customweapons/commands/WeaponCMD.class
 ch/framedev/customweapons/arrows/TildeArrow.class
 ch/framedev/customweapons/main/CustomWeaponsAPI.class
 ch/framedev/customweapons/weapons/CrossFireWeapon.class
+ch/framedev/customweapons/arrows/ArrowType.class
+ch/framedev/customweapons/weapons/PotionBow.class
 ch/framedev/customweapons/arrows/PotionArrow.class
 ch/framedev/customweapons/arrows/CustomArrow.class
 ch/framedev/customweapons/weapons/TNTBow.class

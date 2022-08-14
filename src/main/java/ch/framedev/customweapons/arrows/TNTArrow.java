@@ -17,6 +17,11 @@ public class TNTArrow extends CustomArrow {
         this.delay = delay;
     }
 
+    public TNTArrow(String name, boolean critical, double delay, ArrowType arrowType) {
+        super(name, critical, arrowType);
+        this.delay = delay;
+    }
+
     BukkitTask runnable;
 
     @EventHandler

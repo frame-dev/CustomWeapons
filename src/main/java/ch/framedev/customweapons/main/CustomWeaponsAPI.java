@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.framedev.customweapons.managers.WeaponRegister;
 import ch.framedev.customweapons.weapons.AbstractWeapon;
+import org.bukkit.Material;
 
 public class CustomWeaponsAPI {
 
@@ -25,6 +26,10 @@ public class CustomWeaponsAPI {
 
     public List<AbstractWeapon> getWeapons() {
         return getWeaponRegister().getWeapons();
+    }
+
+    public void registerRecipe(AbstractWeapon weapon, Material material) {
+        AbstractWeapon.createRecipe(weapon, material);
     }
     
 }

@@ -1,5 +1,6 @@
 package ch.framedev.customweapons.commands;
 
+import ch.framedev.customweapons.main.Version;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -22,7 +23,8 @@ public class XrayCMD implements CommandExecutor, Listener {
 	public XrayCMD(Main plugin) {
 		this.plugin = plugin;
 		plugin.getCommand("xray").setExecutor(this);
-		plugin.getCommand("resetxray").setExecutor(this);;
+		plugin.getCommand("resetxray").setExecutor(this);
+		plugin.getCommand("getversion").setExecutor(this);
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
@@ -37,9 +39,30 @@ public class XrayCMD implements CommandExecutor, Listener {
 			}
 			} else if(command.getName().equalsIgnoreCase("resetxray")) {
 				((Player) sender).showDemoScreen();
+			} else if(command.getName().equalsIgnoreCase("getversion")) {
+				sender.sendMessage(getVersion().name());
 			}
 		}
 		return false;
+	}
+
+	public Version getVersion() {
+		String version = plugin.getServer().getBukkitVersion();
+		if(version.contains("1.19"))
+			return Version.VERSION_1_19;
+		if(version.contains("1.18"))
+			return Version.VERSION_1_18;
+		if(version.contains("1_17"))
+			return Version.VERSION_1_17;
+		if(version.contains("1.16"))
+			return Version.VERSION_1_16;
+		if(version.contains("1.15"))
+			return Version.VERSION_1_15;
+		if(version.contains("1.14"))
+			return Version.VERSION_1_14;
+		if(version.contains("1.13"))
+			return Version.VERSION_1_13;
+		return Version.NONE;
 	}
 
 	@EventHandler
