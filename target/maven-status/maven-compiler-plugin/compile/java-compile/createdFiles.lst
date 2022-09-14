@@ -15,6 +15,7 @@ ch/framedev/customweapons/weapons/CrossFireWeapon.class
 ch/framedev/customweapons/arrows/ArrowType.class
 ch/framedev/customweapons/weapons/PotionBow.class
 ch/framedev/customweapons/arrows/PotionArrow.class
+ch/framedev/customweapons/arrows/ExplodeArrow.class
 ch/framedev/customweapons/arrows/CustomArrow.class
 ch/framedev/customweapons/weapons/TNTBow.class
 ch/framedev/customweapons/arrows/TNTArrow$1$1.class

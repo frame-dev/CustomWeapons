@@ -2,6 +2,8 @@ package ch.framedev.customweapons.main;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -28,7 +30,6 @@ public class Main extends JavaPlugin {
 		instance = this;
 		this.weaponRegister = new WeaponRegister();
 		new RegisterManager(this);
-
 		getConfig().options().copyDefaults(true);
 		saveDefaultConfig();
 
@@ -59,6 +60,9 @@ public class Main extends JavaPlugin {
 		new FireBow("FireBow", new ItemStack(Material.BOW), new TildeArrow("TildeArr", true), 3.25, 0, false);
 
 		new CustomWeaponsAPI(this);
+
+		getConfig().setComments("packages", new ArrayList<>(Arrays.asList("Add your API class","look that the weapons are in the package name <your.package.weapons> and the Arrows in <your.package.arrows>","example <ch.framedev.test>")));
+		saveConfig();
 	}
 
 	@Override

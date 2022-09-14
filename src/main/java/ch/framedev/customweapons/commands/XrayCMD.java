@@ -73,7 +73,7 @@ public class XrayCMD implements CommandExecutor, Listener {
 				if (event.getAction() == Action.RIGHT_CLICK_AIR) {
 					Chunk chunk = event.getPlayer().getWorld().getChunkAt(event.getPlayer().getLocation());
 					for (int x = 0; x < 16; x++) {
-						if (plugin.getServer().getVersion().contains("1.18")) {
+						if (getVersion() == Version.VERSION_1_17) {
 							for (int y = -60; y < 255; y++) {
 								for (int z = 0; z < 16; z++) {
 									if (chunk.getBlock(x, y, z).getType() == Material.LAVA
@@ -105,8 +105,8 @@ public class XrayCMD implements CommandExecutor, Listener {
 					if (event.getClickedBlock() != null) {
 						Chunk chunk = event.getClickedBlock().getChunk();
 						for (int x = 0; x < 16; x++) {
-							if (plugin.getServer().getVersion().contains("1.18")
-									|| plugin.getServer().getVersion().contains("1.19")) {
+							if (getVersion() == Version.VERSION_1_18
+									|| getVersion() == Version.VERSION_1_19) {
 								for (int y = -60; y < 255; y++) {
 									for (int z = 0; z < 16; z++) {
 										if (chunk.getBlock(x, y, z).getType() == Material.LAVA
