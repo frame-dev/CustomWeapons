@@ -61,7 +61,8 @@ public abstract class AbstractWeapon implements Listener, Serializable {
     @EventHandler
     public void onPlayerShoot(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player) {
-            if (event.getBow().hasItemMeta() && event.getBow().getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
+            if (event.getBow() != null && event.getBow().hasItemMeta() && event.getBow().getItemMeta() != null &&
+                    event.getBow().getItemMeta().hasDisplayName() && event.getBow().getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
                 arrowShoot.put((Player) event.getEntity(), this.weapontype);
                 event.setProjectile(munition.shoot((Player) event.getEntity(), damage, speed));
                 Arrow arrow = (Arrow) event.getProjectile();
@@ -71,6 +72,11 @@ public abstract class AbstractWeapon implements Listener, Serializable {
         }
     }
 
+    /**
+     * Create the ItemStack with the Name speed infinity, etc.
+     *
+     * @return returns the Created ItemStack
+     */
     public ItemStack create() {
         if (weapontype.getType() == Material.BOW) {
             ItemMeta meta = weapontype.getItemMeta();
@@ -82,7 +88,7 @@ public abstract class AbstractWeapon implements Listener, Serializable {
             if (munition instanceof TNTArrow) {
                 lore.add("Delay : " + ((TNTArrow) munition).delay);
             }
-            if(munition.getArrowType() != null)
+            if (munition.getArrowType() != null)
                 lore.add("§aArrowType : §6" + munition.getArrowType());
             meta.setLore(lore);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -111,7 +117,7 @@ public abstract class AbstractWeapon implements Listener, Serializable {
         Class<AbstractWeapon> clazz = (Class<AbstractWeapon>) getClassFromPackageList(cfg.getString("type"));
         List<Object> params = new ArrayList<>();
         params.add(cfg.getString("name"));
-        params.add(new ItemStack(Material.getMaterial(cfg.getString("weapontype"))));
+        params.add(new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(cfg.getString("weapontype"))))));
         List<Object> paramsV2 = new ArrayList<>();
         paramsV2.add(cfg.getString("munition.name"));
         paramsV2.add(cfg.getBoolean("munition.critical"));
@@ -165,8 +171,8 @@ public abstract class AbstractWeapon implements Listener, Serializable {
 
     public static void createRecipe(AbstractWeapon abstractWeapon, Material ingredient) {
         Server server = Main.getInstance().getServer();
-        if(server.getRecipe(NamespacedKey.fromString(abstractWeapon.name.toLowerCase().replace(" ","_").replace("-","_"), Main.getInstance())) == null) {
-            ShapelessRecipe shapedRecipe = new ShapelessRecipe(Objects.requireNonNull(NamespacedKey.fromString(abstractWeapon.name.toLowerCase().replace(" ","_").replace("-","_"), Main.getInstance())), abstractWeapon.weapontype);
+        if (server.getRecipe(Objects.requireNonNull(NamespacedKey.fromString(abstractWeapon.name.toLowerCase().replace(" ", "_").replace("-", "_"), Main.getInstance()))) == null) {
+            ShapelessRecipe shapedRecipe = new ShapelessRecipe(Objects.requireNonNull(NamespacedKey.fromString(abstractWeapon.name.toLowerCase().replace(" ", "_").replace("-", "_"), Main.getInstance())), abstractWeapon.weapontype);
             shapedRecipe.addIngredient(1, Material.BOW);
             shapedRecipe.addIngredient(1, ingredient);
             shapedRecipe.setGroup("customweapons");
