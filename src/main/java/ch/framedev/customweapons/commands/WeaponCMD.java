@@ -1,15 +1,24 @@
 package ch.framedev.customweapons.commands;
 
+import ch.framedev.customweapons.swords.AbstractSword;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import ch.framedev.customweapons.main.Main;
 import ch.framedev.customweapons.weapons.AbstractWeapon;
 import de.framedev.javautils.SpigotAPI.InventoryManager;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class WeaponCMD implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class WeaponCMD implements CommandExecutor, TabCompleter {
 
     private final Main plugin;
     private InventoryManager weaponInventoryBuilder;
@@ -17,6 +26,7 @@ public class WeaponCMD implements CommandExecutor {
     public WeaponCMD(Main plugin) {
         this.plugin = plugin;
         plugin.getCommand("weapon").setExecutor(this);
+        plugin.getCommand("weapon").setTabCompleter(this);
         this.weaponInventoryBuilder = new InventoryManager("Weapons", 3 * 9);
         this.weaponInventoryBuilder.create();
     }
@@ -31,8 +41,11 @@ public class WeaponCMD implements CommandExecutor {
                         return true;
                     }
                     this.weaponInventoryBuilder.getInventory().clear();
-                    for (AbstractWeapon abstractWeapon : plugin.getWeaponRegister().getWeapons()) {
+                    for (AbstractWeapon abstractWeapon : plugin.getWeaponRegister().getBows()) {
                         this.weaponInventoryBuilder.addItem(abstractWeapon.weapontype);
+                    }
+                    for(AbstractSword abstractSword : plugin.getWeaponRegister().getSwords()) {
+                        this.weaponInventoryBuilder.addItem(abstractSword.getSword());
                     }
                     weaponInventoryBuilder.show((Player) sender);
                 }
@@ -53,4 +66,22 @@ public class WeaponCMD implements CommandExecutor {
         return false;
     }
 
+    @Nullable
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if(command.getName().equalsIgnoreCase("weapon")) {
+            if(args.length == 1) {
+                List<String> empty = new ArrayList<>();
+                List<String> commands = new ArrayList<>(Arrays.asList("inventory", "registered_packages"));
+                for(String cmd : commands) {
+                    if(cmd.toLowerCase().startsWith(args[0].toLowerCase()))
+                        empty.add(cmd);
+                }
+
+                Collections.sort(empty);
+                return empty;
+            }
+        }
+        return null;
+    }
 }

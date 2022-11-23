@@ -675,153 +675,115 @@
  * <https://www.gnu.org/licenses/why-not-lgpl.html>.
  */
 
-package ch.framedev.customweapons.main;
+package ch.framedev.customweapons.swords;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import ch.framedev.customweapons.swords.AbstractSword;
-import ch.framedev.customweapons.swords.SwordType;
-import ch.framedev.customweapons.swords.TestSword;
+import ch.framedev.customweapons.main.Main;
+import ch.framedev.customweapons.weapons.AbstractWeapon;
+import de.framedev.javautils.ReflectionUtils;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationOptions;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Server;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
 
-import ch.framedev.customweapons.arrows.CustomArrow;
-import ch.framedev.customweapons.arrows.TildeArrow;
-import ch.framedev.customweapons.managers.RegisterManager;
-import ch.framedev.customweapons.managers.WeaponRegister;
-import ch.framedev.customweapons.weapons.AbstractWeapon;
-import ch.framedev.customweapons.weapons.CrossFireWeapon;
-import ch.framedev.customweapons.weapons.FireBow;
+import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
-public class Main extends JavaPlugin {
+public abstract class AbstractSword implements Serializable, Listener {
 
-	private WeaponRegister weaponRegister;
-	private static Main instance;
+    private String classType;
+    public String name;
+    public int damage;
+    public double speed;
+    private SwordType swordType;
+    public List<Feature> features;
 
-	//
-	@Override
-	public void onEnable() {
-		instance = this;
-		this.weaponRegister = new WeaponRegister();
-		new RegisterManager(this);
-		getConfig().options().copyDefaults(true);
-		saveDefaultConfig();
+    private ItemStack sword;
 
-        ConfigurationSerialization.registerClass(SwordType.class);
-
-		if (!new File(getDataFolder(), "bows").exists()) {
-			new File(getDataFolder(), "bows").mkdir();
-			File file = new File(getDataFolder() + "/bows", "testbow.yml");
-			FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-			cfg.set("name", "TestBow");
-			cfg.set("type", "CrossFireWeapon");
-			cfg.set("damage", 1.0d);
-			cfg.set("infinity", false);
-			cfg.set("weapontype", Material.BOW.name());
-			cfg.set("speed", 1.0d);
-			cfg.set("munition.type", "CustomArrow");
-			cfg.set("munition.name", "CustomArrow");
-			cfg.set("munition.critical", false);
-			try {
-				cfg.save(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-        if(!new File(getDataFolder(),"swords").exists()) {
-            new File(getDataFolder(), "swords").mkdir();
-            File file = new File(getDataFolder() + "/swords", "testsword.yml");
-            FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-            cfg.set("classType", "TestSword");
-            cfg.set("name","Test");
-            cfg.set("damage",2);
-            cfg.set("speed", 2.5);
-            cfg.set("type", SwordType.IRON.name());
-            try {
-                cfg.save(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        // Load all Weapons from File
-		for (File file : getBowFiles()) {
-			getWeaponFromFile(file);
-		}
-        for (File file : getSwordFiles()) {
-            getSwordFromFile(file);
-        }
-
-        // Test Weapons
-		new CrossFireWeapon("CrossFire", new ItemStack(Material.BOW), new CustomArrow("Arrow12", true), 2.5, 2, false);
-		new FireBow("FireBow", new ItemStack(Material.BOW), new TildeArrow("TildeArr", true), 3.25, 0, false);
-        new TestSword("Test Sword", 8, 4.5, SwordType.IRON);
-
-		new CustomWeaponsAPI(this);
-
-        // Comments for "packages" in Config
-		getConfig().setComments("packages", new ArrayList<>(Arrays.asList("Add your API class",
-                "look that the weapons are in the package name <your.package.weapons> and the Arrows in <your.package.arrows> the swords are located in <your.package.swords>",
-                "example <ch.framedev.test> (<ch.framedev.test> has been set as <your.package>)")));
-		saveConfig();
-
-        getLogger().severe("This Plugin is in the Early stadium please send me errors on my Discord Server.");
-	}
-
-	@Override
-	public void onLoad() {
-
-	}
-
-	@Override
-	public void onDisable() {
-
-	}
-
-	public static Main getInstance() {
-		return instance;
-	}
-
-	public WeaponRegister getWeaponRegister() {
-		return weaponRegister;
-	}
-
-	public AbstractWeapon getWeaponFromFile(File file) {
-		try {
-			return AbstractWeapon.load(file);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-    public AbstractSword getSwordFromFile(File file) {
-        return AbstractSword.load(file);
+    public AbstractSword(String name, int damage, double speed, SwordType swordType) {
+        this.name = name;
+        this.damage = damage;
+        this.speed = speed;
+        this.swordType = swordType;
+        this.classType = this.getClass().getSimpleName();
+        this.features = new ArrayList<>();
+        Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
+        create();
     }
 
-	public File[] getBowFiles() {
-		File file = new File(getDataFolder(), "bows");
-		if (file.exists()) {
-			return file.listFiles();
-		}
-		return null;
-	}
+    public ItemStack getSword() {
+        return sword;
+    }
 
-    public File[] getSwordFiles() {
-        File file = new File(getDataFolder(), "swords");
-        if (file.exists()) {
-            return file.listFiles();
+    public ItemStack create() {
+        sword = new ItemStack(Material.valueOf(swordType.getType()));
+        ItemMeta meta = sword.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(name);
+            AttributeModifier attackModifier = new AttributeModifier(UUID.randomUUID(), "Attack Damage", damage, AttributeModifier.Operation.ADD_NUMBER);
+            meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, attackModifier);
+            AttributeModifier speedModifier = new AttributeModifier(UUID.randomUUID(), "Attack Speed", speed, AttributeModifier.Operation.ADD_NUMBER);
+            meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, speedModifier);
+            sword.setItemMeta(meta);
+        }
+        Main.getInstance().getWeaponRegister().registerSword(this);
+        return sword;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends AbstractSword> T load(File file) {
+        ReflectionUtils reflectionUtils = new ReflectionUtils();
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        Class<AbstractSword> clazz = (Class<AbstractSword>) getClassFromPackageList(cfg.getString("classType"));
+        List<Object> params = new ArrayList<>();
+        params.add(cfg.getString("name"));
+        params.add(cfg.getInt("damage"));
+        params.add(cfg.getDouble("speed"));
+        params.add(SwordType.valueOf(cfg.getString("type")));
+        List<Feature> featureList = null;
+        if (cfg.contains("features")) {
+            featureList = new ArrayList<>();
+            for (String feature : cfg.getStringList("features")) {
+                featureList.add(Feature.valueOf(feature));
+            }
+        }
+        Object o = reflectionUtils.newInstance(reflectionUtils.getClassName(clazz), params, true, String.class, int.class, double.class, SwordType.class);
+        T weapon = (T) o;
+        if (featureList != null)
+            weapon.features.addAll(featureList);
+        return (T) weapon;
+    }
+
+    private static Class<?> getClassFromPackageList(String sword) {
+        for (String s : Main.getInstance().getConfig().getStringList("packages")) {
+            try {
+                Class<?> clazz = Class.forName(s + ".swords." + sword);
+                return clazz;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return null;
+    }
+
+    public static void createRecipe(AbstractSword abstractSword, Material ingredient) {
+        Server server = Main.getInstance().getServer();
+        if (server.getRecipe(Objects.requireNonNull(NamespacedKey.fromString(abstractSword.name.toLowerCase().replace(" ", "_").replace("-", "_"), Main.getInstance()))) == null) {
+            ShapelessRecipe shapedRecipe = new ShapelessRecipe(Objects.requireNonNull(NamespacedKey.fromString(abstractSword.name.toLowerCase().replace(" ", "_").replace("-", "_"), Main.getInstance())), abstractSword.getSword());
+            shapedRecipe.addIngredient(1, Material.valueOf(abstractSword.swordType.getType()));
+            shapedRecipe.addIngredient(1, ingredient);
+            shapedRecipe.setGroup("customweapons");
+            server.addRecipe(shapedRecipe);
+        }
     }
 }

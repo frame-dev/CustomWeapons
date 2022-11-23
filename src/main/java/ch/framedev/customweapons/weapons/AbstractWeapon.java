@@ -54,7 +54,7 @@ public abstract class AbstractWeapon implements Listener, Serializable {
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         this.bowType = this.getClass().getSimpleName();
         create();
-        if (!Main.getInstance().getWeaponRegister().getWeapons().contains(this))
+        if (!Main.getInstance().getWeaponRegister().getBows().contains(this))
             Main.getInstance().getWeaponRegister().registerWeapon(this);
     }
 
