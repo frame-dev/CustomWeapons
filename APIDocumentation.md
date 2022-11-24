@@ -32,4 +32,6 @@ For Arrows you need to extend the CustomArrow Class
 <br><br>
 For Swords you need to extend the AbstractSword Class
 
+### Do not Change the Constructors!!!
+
 ### All Classes have Listeners Implemented and Registered!
