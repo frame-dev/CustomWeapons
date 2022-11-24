@@ -1,5 +1,8 @@
 ch/framedev/customweapons/weapons/FireBow.class
+ch/framedev/customweapons/swords/BetterGoldSword.class
+ch/framedev/customweapons/swords/BetterNetheriteSword.class
 ch/framedev/customweapons/arrows/PotionArrow$1.class
+ch/framedev/customweapons/swords/BetterStoneSword.class
 ch/framedev/customweapons/arrows/TNTArrow.class
 ch/framedev/customweapons/swords/BetterIronSword.class
 ch/framedev/customweapons/commands/WeaponCMD.class
@@ -9,6 +12,7 @@ ch/framedev/customweapons/weapons/PotionBow.class
 ch/framedev/customweapons/arrows/CustomArrow.class
 ch/framedev/customweapons/swords/BetterWoodenSword.class
 ch/framedev/customweapons/managers/RegisterManager.class
+ch/framedev/customweapons/swords/FireStoneSword.class
 ch/framedev/customweapons/arrows/TNTArrow$1.class
 ch/framedev/customweapons/managers/WeaponRegister.class
 ch/framedev/customweapons/main/Version.class
@@ -22,5 +26,6 @@ ch/framedev/customweapons/swords/SwordType.class
 ch/framedev/customweapons/arrows/PotionArrow.class
 ch/framedev/customweapons/arrows/ExplodeArrow.class
 ch/framedev/customweapons/weapons/TNTBow.class
+ch/framedev/customweapons/swords/BetterDiamondSword.class
 ch/framedev/customweapons/swords/Feature.class
 ch/framedev/customweapons/arrows/TNTArrow$1$1.class

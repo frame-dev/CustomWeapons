@@ -33,12 +33,13 @@ public class CustomWeaponsAPI {
         AbstractWeapon.createRecipe(weapon, material);
     }
 
+    public List<AbstractSword> getSwords() {
+        return getWeaponRegister().getSwords();
+    }
+
     public void registerSwordRecipe(AbstractSword abstractSword, Material material) {
         AbstractSword.createRecipe(abstractSword, material);
     }
 
-    public List<AbstractSword> getSwords() {
-        return getWeaponRegister().getSwords();
-    }
-    
+
 }

@@ -41,11 +41,13 @@ public class WeaponCMD implements CommandExecutor, TabCompleter {
                         return true;
                     }
                     this.weaponInventoryBuilder.getInventory().clear();
-                    for (AbstractWeapon abstractWeapon : plugin.getWeaponRegister().getBows()) {
-                        this.weaponInventoryBuilder.addItem(abstractWeapon.weapontype);
+                    for (AbstractWeapon abstractBow : plugin.getWeaponRegister().getBows()) {
+                        if (!abstractBow.name.equalsIgnoreCase("Example Bow"))
+                        this.weaponInventoryBuilder.addItem(abstractBow.weapontype);
                     }
-                    for(AbstractSword abstractSword : plugin.getWeaponRegister().getSwords()) {
-                        this.weaponInventoryBuilder.addItem(abstractSword.getSword());
+                    for (AbstractSword abstractSword : plugin.getWeaponRegister().getSwords()) {
+                        if (!abstractSword.name.equalsIgnoreCase("Example Sword"))
+                            this.weaponInventoryBuilder.addItem(abstractSword.getSword());
                     }
                     weaponInventoryBuilder.show((Player) sender);
                 }
@@ -69,12 +71,12 @@ public class WeaponCMD implements CommandExecutor, TabCompleter {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(command.getName().equalsIgnoreCase("weapon")) {
-            if(args.length == 1) {
+        if (command.getName().equalsIgnoreCase("weapon")) {
+            if (args.length == 1) {
                 List<String> empty = new ArrayList<>();
                 List<String> commands = new ArrayList<>(Arrays.asList("inventory", "registered_packages"));
-                for(String cmd : commands) {
-                    if(cmd.toLowerCase().startsWith(args[0].toLowerCase()))
+                for (String cmd : commands) {
+                    if (cmd.toLowerCase().startsWith(args[0].toLowerCase()))
                         empty.add(cmd);
                 }
 
