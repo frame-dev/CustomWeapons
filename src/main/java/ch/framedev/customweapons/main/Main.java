@@ -699,6 +699,7 @@ import ch.framedev.customweapons.managers.WeaponRegister;
 import ch.framedev.customweapons.weapons.AbstractWeapon;
 import ch.framedev.customweapons.weapons.CrossFireWeapon;
 import ch.framedev.customweapons.weapons.FireBow;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class Main extends JavaPlugin {
 
@@ -752,13 +753,19 @@ public class Main extends JavaPlugin {
             }
         }
 
-        // Load all Weapons from File
-        for (File file : getBowFiles()) {
-            getWeaponFromFile(file);
-        }
-        for (File file : getSwordFiles()) {
-            getSwordFromFile(file);
-        }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                // Load all Weapons from File
+                for (File file : getBowFiles()) {
+                    getWeaponFromFile(file);
+                }
+                for (File file : getSwordFiles()) {
+                    getSwordFromFile(file);
+                }
+                getLogger().info("Files Loaded!");
+            }
+        }.runTaskLater(this, 120);
 
         // Test Weapons
 

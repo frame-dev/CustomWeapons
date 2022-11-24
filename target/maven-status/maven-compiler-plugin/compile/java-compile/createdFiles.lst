@@ -23,6 +23,7 @@ ch/framedev/customweapons/arrows/TildeArrow.class
 ch/framedev/customweapons/arrows/ArrowType.class
 ch/framedev/customweapons/swords/AbstractSword.class
 ch/framedev/customweapons/swords/SwordType.class
+ch/framedev/customweapons/main/Main$1.class
 ch/framedev/customweapons/arrows/PotionArrow.class
 ch/framedev/customweapons/arrows/ExplodeArrow.class
 ch/framedev/customweapons/weapons/TNTBow.class
