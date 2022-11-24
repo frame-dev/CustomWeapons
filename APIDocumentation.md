@@ -1,6 +1,6 @@
 # API Documentation
 
-You can create your own Bow or Sword in the Folders, there should be some Example Files
+You can create your own Bow or Sword in the Folders(**<plugins/CustomWeapons/Bows> <plugins/CustomWeapons/Swords>**), there should be some Example Files
 
 Bow Types
 - CrossFireBow
