@@ -681,5 +681,6 @@ public class BetterIronSword extends AbstractSword {
 
     public BetterIronSword(String name, int damage, double speed, SwordType swordType) {
         super(name, damage, speed, swordType);
+        swordType = SwordType.IRON;
     }
 }

@@ -9,7 +9,6 @@ ch/framedev/customweapons/weapons/PotionBow.class
 ch/framedev/customweapons/arrows/CustomArrow.class
 ch/framedev/customweapons/swords/BetterWoodenSword.class
 ch/framedev/customweapons/managers/RegisterManager.class
-ch/framedev/customweapons/commands/XrayCMD.class
 ch/framedev/customweapons/arrows/TNTArrow$1.class
 ch/framedev/customweapons/managers/WeaponRegister.class
 ch/framedev/customweapons/main/Version.class
