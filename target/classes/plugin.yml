@@ -1,6 +1,0 @@
-name: CustomWeapons
-version: 1.1.0-SNAPSHOT
-main: ch.framedev.customweapons.main.Main
-api-version: '1.13'
-commands:
-  weapon:
