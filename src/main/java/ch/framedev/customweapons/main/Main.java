@@ -711,6 +711,7 @@ public class Main extends JavaPlugin {
         saveDefaultConfig();
 
         ConfigurationSerialization.registerClass(SwordType.class);
+        ConfigurationSerialization.registerClass(Feature.class);
 
         if (!new File(getDataFolder(), "bows").exists()) {
             new File(getDataFolder(), "bows").mkdir();

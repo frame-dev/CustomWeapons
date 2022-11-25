@@ -151,7 +151,7 @@ public abstract class AbstractBow implements Listener, Serializable {
                 Class<?> claZ = Class.forName(s + ".weapons." + bowType);
                 return claZ;
             } catch (Exception e) {
-                continue;
+                e.printStackTrace();
             }
         }
         return null;
@@ -163,7 +163,7 @@ public abstract class AbstractBow implements Listener, Serializable {
                 Class<?> claZ = Class.forName(s + ".arrows." + arrowType);
                 return claZ;
             } catch (Exception e) {
-                continue;
+                e.printStackTrace();
             }
         }
         return null;
