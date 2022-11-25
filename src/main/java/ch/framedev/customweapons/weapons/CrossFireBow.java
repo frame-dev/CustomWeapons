@@ -5,9 +5,9 @@ import org.bukkit.inventory.ItemStack;
 
 import ch.framedev.customweapons.arrows.CustomArrow;
 
-public class CrossFireWeapon extends AbstractWeapon {
+public class CrossFireBow extends AbstractBow {
 	
-	public CrossFireWeapon(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed, boolean infinity) {
+	public CrossFireBow(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed, boolean infinity) {
 		super(name, weaponType, munition, speed, speed, infinity);
 		super.name = name;
 		super.weapontype = weaponType;

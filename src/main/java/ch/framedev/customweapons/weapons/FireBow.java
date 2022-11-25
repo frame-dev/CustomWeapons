@@ -11,7 +11,7 @@ import org.bukkit.inventory.ShapelessRecipe;
 
 import java.util.Objects;
 
-public class FireBow extends AbstractWeapon {
+public class FireBow extends AbstractBow {
 	
 	public FireBow(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed, boolean infinity) {
 		super(name, weaponType, munition, damage, speed, infinity);

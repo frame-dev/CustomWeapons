@@ -8,7 +8,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import ch.framedev.customweapons.main.Main;
-import ch.framedev.customweapons.weapons.AbstractWeapon;
+import ch.framedev.customweapons.weapons.AbstractBow;
 import de.framedev.javautils.SpigotAPI.InventoryManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -41,7 +41,7 @@ public class WeaponCMD implements CommandExecutor, TabCompleter {
                         return true;
                     }
                     this.weaponInventoryBuilder.getInventory().clear();
-                    for (AbstractWeapon abstractBow : plugin.getWeaponRegister().getBows()) {
+                    for (AbstractBow abstractBow : plugin.getWeaponRegister().getBows()) {
                         if (!abstractBow.name.equalsIgnoreCase("Example Bow"))
                         this.weaponInventoryBuilder.addItem(abstractBow.weapontype);
                     }

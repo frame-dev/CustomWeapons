@@ -682,23 +682,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ch.framedev.customweapons.arrows.*;
 import ch.framedev.customweapons.swords.*;
+import ch.framedev.customweapons.weapons.*;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationOptions;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import ch.framedev.customweapons.arrows.CustomArrow;
-import ch.framedev.customweapons.arrows.TildeArrow;
 import ch.framedev.customweapons.managers.RegisterManager;
 import ch.framedev.customweapons.managers.WeaponRegister;
-import ch.framedev.customweapons.weapons.AbstractWeapon;
-import ch.framedev.customweapons.weapons.CrossFireWeapon;
-import ch.framedev.customweapons.weapons.FireBow;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Main extends JavaPlugin {
@@ -758,10 +753,12 @@ public class Main extends JavaPlugin {
             public void run() {
                 // Load all Weapons from File
                 for (File file : getBowFiles()) {
-                    getWeaponFromFile(file);
+                    if (!file.getAbsoluteFile().getName().startsWith("."))
+                        getWeaponFromFile(file);
                 }
                 for (File file : getSwordFiles()) {
-                    getSwordFromFile(file);
+                    if (!file.getAbsoluteFile().getName().startsWith("."))
+                        getSwordFromFile(file);
                 }
                 getLogger().info("Files Loaded!");
             }
@@ -770,8 +767,10 @@ public class Main extends JavaPlugin {
         // Test Weapons
 
         // Bows
-        new CrossFireWeapon("CrossFire", new ItemStack(Material.BOW), new CustomArrow("Arrow12", true), 2.5, 2, false);
+        new CrossFireBow("CrossFire", new ItemStack(Material.BOW), new CustomArrow("Arrow12", true, ArrowType.DEFAULT), 2.5, 2, false);
         new FireBow("FireBow", new ItemStack(Material.BOW), new TildeArrow("TildeArr", true), 3.25, 0, false);
+        new TNTBow("TNTBow", new ItemStack(Material.BOW), new TNTArrow("TNTArrow", true, 5, ArrowType.DEFAULT), 2, 1, false);
+        new PotionBow("PotionBow", new ItemStack(Material.BOW), new PotionArrow("PotionArrow", true), 1, 1, false);
 
         // Swords
         new BetterWoodenSword("Better Wooden Sword", 4, 1.1, SwordType.WOODEN);
@@ -812,9 +811,9 @@ public class Main extends JavaPlugin {
         return weaponRegister;
     }
 
-    public AbstractWeapon getWeaponFromFile(File file) {
+    public AbstractBow getWeaponFromFile(File file) {
         try {
-            return AbstractWeapon.load(file);
+            return AbstractBow.load(file);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

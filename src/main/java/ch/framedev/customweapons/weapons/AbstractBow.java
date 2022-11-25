@@ -32,7 +32,7 @@ import java.util.*;
 /**
  * @author FrameDev
  */
-public abstract class AbstractWeapon implements Listener, Serializable {
+public abstract class AbstractBow implements Listener, Serializable {
 
     public String name;
     public double damage;
@@ -43,7 +43,7 @@ public abstract class AbstractWeapon implements Listener, Serializable {
     public String bowType;
     public static HashMap<Player, ItemStack> arrowShoot = new HashMap<>();
 
-    public AbstractWeapon(String name, ItemStack weapontype, CustomArrow munition, double damage, double speed, boolean infinity) {
+    public AbstractBow(String name, ItemStack weapontype, CustomArrow munition, double damage, double speed, boolean infinity) {
         this.name = name;
         this.weapontype = weapontype;
         this.munition = munition;
@@ -111,10 +111,10 @@ public abstract class AbstractWeapon implements Listener, Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends AbstractWeapon> T load(File file) throws ClassNotFoundException {
+    public static <T extends AbstractBow> T load(File file) throws ClassNotFoundException {
         ReflectionUtils reflectionUtils = new ReflectionUtils();
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
-        Class<AbstractWeapon> clazz = (Class<AbstractWeapon>) getClassFromPackageList(cfg.getString("type"));
+        Class<AbstractBow> clazz = (Class<AbstractBow>) getClassFromPackageList(cfg.getString("type"));
         List<Object> params = new ArrayList<>();
         params.add(cfg.getString("name"));
         params.add(new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(cfg.getString("weapontype"))))));
@@ -169,7 +169,7 @@ public abstract class AbstractWeapon implements Listener, Serializable {
         return null;
     }
 
-    public static void createRecipe(AbstractWeapon abstractWeapon, Material ingredient) {
+    public static void createRecipe(AbstractBow abstractWeapon, Material ingredient) {
         Server server = Main.getInstance().getServer();
         if (server.getRecipe(Objects.requireNonNull(NamespacedKey.fromString(abstractWeapon.name.toLowerCase().replace(" ", "_").replace("-", "_"), Main.getInstance()))) == null) {
             ShapelessRecipe shapedRecipe = new ShapelessRecipe(Objects.requireNonNull(NamespacedKey.fromString(abstractWeapon.name.toLowerCase().replace(" ", "_").replace("-", "_"), Main.getInstance())), abstractWeapon.weapontype);

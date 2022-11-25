@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.inventory.ItemStack;
 
-public class TNTBow extends AbstractWeapon {
+public class TNTBow extends AbstractBow {
 
     public TNTBow(String name, ItemStack weaponType, CustomArrow munition, double damage, double speed, boolean infinity) {
         super(name, weaponType, munition, damage, speed, infinity);

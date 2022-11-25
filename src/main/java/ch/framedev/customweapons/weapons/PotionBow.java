@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PotionBow extends AbstractWeapon {
+public class PotionBow extends AbstractBow {
 
     private List<PotionEffect> effects;
 

@@ -4,24 +4,24 @@ import java.util.HashMap;
 
 import ch.framedev.customweapons.arrows.CustomArrow;
 import ch.framedev.customweapons.swords.AbstractSword;
-import ch.framedev.customweapons.weapons.AbstractWeapon;
+import ch.framedev.customweapons.weapons.AbstractBow;
 import de.framedev.javautils.FrameList;
 
 public class WeaponRegister {
 	
-	private FrameList<AbstractWeapon> bows = new FrameList<>();
+	private FrameList<AbstractBow> bows = new FrameList<>();
 	private HashMap<Class<?>, CustomArrow> arrows = new HashMap<>();
 	private FrameList<AbstractSword> swords = new FrameList<>();
 	
 	public WeaponRegister() {
 	}
 	
-	public <T extends AbstractWeapon> void registerWeapon(T t) {
+	public <T extends AbstractBow> void registerWeapon(T t) {
 		bows.add(t);
 		arrows.put(t.munition.getClass(), t.munition);
 	}
 	
-	public FrameList<AbstractWeapon> getBows() {
+	public FrameList<AbstractBow> getBows() {
 		return bows;
 	}
 

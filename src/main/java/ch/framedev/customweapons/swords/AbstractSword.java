@@ -678,7 +678,6 @@
 package ch.framedev.customweapons.swords;
 
 import ch.framedev.customweapons.main.Main;
-import ch.framedev.customweapons.weapons.AbstractWeapon;
 import de.framedev.javautils.ReflectionUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
