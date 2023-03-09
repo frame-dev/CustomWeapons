@@ -6,3 +6,5 @@ There is written how to create your own Weapon in the File or you can make your 
 
 API Documentation
 <a href="APIDocumentation.md">Documentation</a>
+
+I see forward to Release it on tge Spigot Website
