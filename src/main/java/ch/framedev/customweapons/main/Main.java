@@ -718,7 +718,7 @@ public class Main extends JavaPlugin {
             File file = new File(getDataFolder() + "/bows", "examplebow.yml");
             FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
             cfg.set("name", "Example Bow");
-            cfg.set("type", "CrossFireWeapon");
+            cfg.set("type", "CrossFireBow");
             cfg.set("damage", 1.0d);
             cfg.set("infinity", false);
             cfg.set("weapontype", Material.BOW.name());
@@ -740,7 +740,7 @@ public class Main extends JavaPlugin {
             cfg.set("classType", "TestSword");
             cfg.set("name", "Example Sword");
             cfg.set("damage", 2);
-            cfg.set("speed", 2.5);
+            cfg.set("speed", 2.5d);
             cfg.set("type", SwordType.IRON.name());
             try {
                 cfg.save(file);
@@ -781,6 +781,7 @@ public class Main extends JavaPlugin {
         new BetterDiamondSword("Better Diamond Sword", 8, 1.2, SwordType.DIAMOND);
         new BetterNetheriteSword("Better Netherite Sword", 9, 0.9, SwordType.NETHERITE);
         new FireStoneSword("Fire Stone Sword", 5, 1.8, SwordType.STONE);
+        new TestSword("Test Sword", 5, 1.1, SwordType.DIAMOND);
 
         // Register API
         new CustomWeaponsAPI(this);

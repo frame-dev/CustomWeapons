@@ -677,9 +677,25 @@
 
 package ch.framedev.customweapons.swords;
 
-public class TestSword extends AbstractSword {
+import ch.framedev.customweapons.main.Main;
+import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Objects;
+import java.util.UUID;
+
+public class TestSword extends AbstractSword implements Listener {
 
     public TestSword(String name, int damage, double speed, SwordType swordType) {
         super(name, damage, speed, swordType);
+        features.add(Feature.EXTRA_HEARTHS);
+        addFeature(Feature.EXTRA_HEARTHS, 12);
     }
 }

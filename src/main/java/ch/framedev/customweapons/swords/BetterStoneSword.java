@@ -677,10 +677,13 @@
 
 package ch.framedev.customweapons.swords;
 
+import org.bukkit.Material;
+
 public class BetterStoneSword extends AbstractSword {
 
     public BetterStoneSword(String name, int damage, double speed, SwordType swordType) {
         super(name, damage, speed, swordType);
         swordType = SwordType.STONE;
+        createRecipe(this, Material.STONE_SWORD);
     }
 }

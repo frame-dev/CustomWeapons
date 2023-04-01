@@ -679,6 +679,7 @@ package ch.framedev.customweapons.swords;
 
 import ch.framedev.customweapons.main.Main;
 import de.framedev.javautils.ReflectionUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Server;
@@ -687,6 +688,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -707,7 +709,7 @@ public abstract class AbstractSword implements Serializable, Listener {
     private SwordType swordType;
     public List<Feature> features;
 
-    private ItemStack sword;
+    protected ItemStack sword;
 
     public AbstractSword(String name, int damage, double speed, SwordType swordType) {
         this.name = name;
@@ -716,12 +718,28 @@ public abstract class AbstractSword implements Serializable, Listener {
         this.swordType = swordType;
         this.classType = this.getClass().getSimpleName();
         this.features = new ArrayList<>();
-        Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         create();
+    }
+
+    public AbstractSword addFeature(Feature feature, double amount) {
+        features.add(feature);
+        if(sword != null) {
+            ItemMeta meta = sword.getItemMeta();
+            if(feature == Feature.EXTRA_HEARTHS) {
+                meta.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(UUID.randomUUID(), "Health", amount, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
+            }
+            sword.setItemMeta(meta);
+        }
+        return this;
     }
 
     public ItemStack getSword() {
         return sword;
+    }
+
+    public SwordType getSwordType() {
+        return swordType;
     }
 
     public ItemStack create() {
@@ -729,9 +747,9 @@ public abstract class AbstractSword implements Serializable, Listener {
         ItemMeta meta = sword.getItemMeta();
         if (meta != null) {
             meta.setDisplayName(name);
-            AttributeModifier attackModifier = new AttributeModifier(UUID.randomUUID(), "Attack Damage", damage, AttributeModifier.Operation.ADD_NUMBER);
+            AttributeModifier attackModifier = new AttributeModifier(UUID.randomUUID(), "Attack Damage", damage, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
             meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, attackModifier);
-            AttributeModifier speedModifier = new AttributeModifier(UUID.randomUUID(), "Attack Speed", speed, AttributeModifier.Operation.ADD_NUMBER);
+            AttributeModifier speedModifier = new AttributeModifier(UUID.randomUUID(), "Attack Speed", speed, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND);
             meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, speedModifier);
             sword.setItemMeta(meta);
         }

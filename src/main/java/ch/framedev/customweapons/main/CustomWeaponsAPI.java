@@ -41,5 +41,9 @@ public class CustomWeaponsAPI {
         AbstractSword.createRecipe(abstractSword, material);
     }
 
+    public Version getVersion() {
+        return Version.getVersion();
+    }
+
 
 }
